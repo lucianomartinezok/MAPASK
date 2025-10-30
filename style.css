@@ -1,0 +1,1287 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden; /* evitar scroll vertical */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 0; /* sin padding global para no sumar altura */
+    margin: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    height: 100vh; /* ocupar altura completa sin exceder */
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.sidebar.collapsed {
+    width: 50px;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    top: 20px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.sidebar-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.toggle-icon {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.sidebar-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed .sidebar-content {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar-header {
+    padding: 20px 10px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.sidebar-step-title { display: none; }
+
+.sidebar-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+    color: white;
+}
+
+.sidebar-content {
+    flex: 1;
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.progress-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 5px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.step-indicator.active {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.step-indicator.completed {
+    background: rgba(46, 204, 113, 0.2);
+    border: 1px solid rgba(46, 204, 113, 0.5);
+}
+
+.step-number {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #2ecc71; /* verde para todos los pasos */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+/* Ya no variamos el color por estado; siempre verde */
+
+.step-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 5px;
+    color: white;
+    display: none; /* oculto por defecto */
+}
+
+.step-status {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Mostrar el título solo para el paso activo */
+.step-indicator.active .step-title { display: block; }
+
+.sidebar-actions {
+    margin-top: 20px;
+}
+
+.btn-retroceder {
+    width: 100%;
+    background: rgba(231, 76, 60, 0.8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn-retroceder:hover:not(:disabled) {
+    background: rgba(231, 76, 60, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-retroceder:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* Contenido principal */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Responsive para pantallas de 13-23 pulgadas */
+@media screen and (min-width: 1366px) and (max-width: 1920px) {
+    .container {
+        max-width: 100%;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+        min-height: 100vh;
+        width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    body {
+        padding: 0;
+        margin: 0;
+        overflow-x: hidden;
+    }
+    
+    .paso3-content {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        padding: 1%;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    .sidebar {
+        width: 200px;
+    }
+    
+    .sidebar.collapsed {
+        width: 50px;
+    }
+    
+    .main-content {
+        flex: 1;
+    }
+}
+
+/* Layout del paso 3 - 2 columnas: izquierda (todo) y derecha (mapa) */
+.paso3-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 2%;
+    padding: 1%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Nueva fila inferior de dos columnas */
+.paso3-columns {
+    display: flex;
+    gap: 2%;
+    width: 100%;
+    flex: 1;
+    min-height: 0; /* evita overflow en flexbox */
+}
+
+/* Columna izquierda: Todo excepto el mapa */
+.paso3-left {
+    flex: 0 0 58%;
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* Parte superior: Slots, Exp y Bin */
+.paso3-top {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5%;
+    width: 100%;
+}
+
+/* Parte inferior: Variables y Botones */
+.paso3-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+    flex: 1;
+}
+
+/* Columna derecha: Solo el mapa K */
+.paso3-right {
+    flex: 0 0 40%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* Mapa sin caja gris */
+.mapa-container {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilos de mapa-preview eliminados - ya no se usan */
+
+/* Mapa vacío inicial */
+.mapa-container.vacio {
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+    padding: 40px;
+}
+
+.mapa-container.vacio::before {
+    content: "El mapa aparecerá aquí cuando generes la expresión";
+    font-size: 1.1rem;
+}
+
+header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 300;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+main {
+    padding: 30px;
+}
+
+/* Contenedores de pasos */
+.step-container {
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.step-container.hidden {
+    display: none;
+}
+
+.step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.step-title-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.step-title-container h2 {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.btn-anterior-titulo {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(231, 76, 60, 0.3);
+}
+
+.btn-anterior-titulo:hover:not(:disabled) {
+    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(231, 76, 60, 0.4);
+}
+
+.btn-anterior-titulo:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+    box-shadow: none;
+}
+
+.step-number {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Controles */
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Selector de variables */
+.variable-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.variable-option {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.variable-option:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.variable-option.selected {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.var-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.var-details {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Selector de minterms */
+.minterm-selector {
+    margin-bottom: 20px;
+}
+
+.minterm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 8px;
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.minterm-item {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.minterm-item:hover {
+    border-color: #667eea;
+    background: #e3f2fd;
+}
+
+.minterm-item.selected {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+}
+
+.minterm-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.minterm-counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.minterm-counter label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.counter-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-counter {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-counter:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.btn-counter:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.counter-display {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2c3e50;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* Constructor de expresiones */
+.expression-builder {
+    margin-bottom: 20px;
+}
+
+/* Display de slots */
+.slots-display {
+    background: transparent; /* fondo blanco/transparent */
+    border: none; /* sin caja */
+    border-radius: 0;
+    padding: 0; /* sin padding para maximizar espacio */
+    margin-bottom: 8px;
+}
+
+.slots-label {
+    font-weight: 600;
+    color: #2e7d32;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.slots-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contenedor de grupo: slot + separador */
+.slot-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap; /* evitar salto de línea dentro del grupo */
+}
+
+/* Modo grilla cuando están completos: hasta 9 grupos por fila */
+.slots-container.slots-grid {
+    display: grid;
+    grid-template-columns: repeat(9, auto);
+    gap: 6px 8px;
+    justify-content: center;
+}
+
+.slot-item {
+    background: transparent; /* sin fondo */
+    border: none; /* sin bordes */
+    border-radius: 0;
+    padding: 0; /* sin padding */
+    font-weight: 600;
+    font-size: 0.9rem; /* legible sin caja */
+    color: #2c3e50; /* texto neutro */
+    min-width: 0;
+    text-align: center;
+    transition: all 0.2s ease;
+    display: inline-flex; /* mantener contenidos en línea */
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap; /* evitar que corte en dos filas */
+}
+
+.slot-item.filled {
+    background: transparent;
+    color: #2c3e50;
+}
+
+.slot-item.filled span[style*="overline"] {
+    color: #ffcdd2 !important;
+    text-decoration: overline !important;
+    font-weight: bold !important;
+}
+
+/* Términos individuales en slots */
+.slot-termino {
+    display: inline-block;
+    background: transparent; /* sin caja */
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #2c3e50;
+    min-width: 0;
+    text-align: center;
+    transition: all 0.2s ease;
+    white-space: nowrap; /* cada término en una sola línea */
+}
+
+.slot-termino.slot-normal {
+    background: transparent;
+    color: #4CAF50; /* verde como antes */
+}
+
+.slot-termino.slot-negado {
+    background: transparent;
+    color: #FF9800; /* naranja como antes */
+}
+
+.slot-termino.slot-negado span[style*="overline"] {
+    text-decoration: overline;
+    font-weight: bold;
+    color: inherit; /* usa el mismo color naranja del término */
+}
+
+/* Techito para negados en slots con misma lógica que Exp */
+.slot-termino.slot-negado .neg-overline {
+    text-decoration: overline;
+    font-weight: bold;
+}
+
+.slot-separator {
+    color: #4CAF50; /* verde como antes */
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 0 4px;
+}
+
+.expression-display {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    min-height: 60px;
+    word-wrap: break-word;
+    line-height: 1.6;
+    color: #2c3e50;
+    font-weight: 500;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 8px 12px;
+    align-items: center;
+}
+
+/* Estilos unificados para expresión y binario */
+.expression-text {
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    color: #2c3e50;
+    font-weight: 600;
+    line-height: 1.8;
+    letter-spacing: 0;
+    text-align: left;
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: repeat(9, auto);
+    gap: 8px 8px;
+    justify-content: start;
+}
+
+.expression-binary {
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    color: #495057;
+    font-weight: 600;
+    line-height: 1.8;
+    letter-spacing: 0;
+    text-align: left;
+    grid-column: 2;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(9, auto);
+    gap: 8px 8px;
+    justify-content: start;
+}
+
+/* (ya no se usa groups-grid; queda el grid por defecto) */
+
+.expression-label {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.binary-label {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.expression-display span[style*="overline"] {
+    text-decoration: overline;
+    font-weight: bold;
+    color: #e74c3c;
+    text-decoration-thickness: 2px;
+    text-underline-offset: -2px;
+}
+
+/* Grupos y celdas alineadas */
+.expr-group, .bin-group {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.group-plus {
+    display: inline-block;
+    margin: 0 4px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.cell {
+    display: inline-block;
+    width: 1em; /* más compacto para que entren 9 */
+    text-align: center;
+}
+
+/* Negación en Exp (Ā) manteniendo ancho */
+.expr-group .cell .neg {
+    text-decoration: overline;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.variable-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.variable-btn {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.variable-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+.variable-btn.negated {
+    background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+}
+
+.variable-btn.negated:hover {
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+}
+
+/* Botones deshabilitados */
+.variable-btn.disabled,
+.variable-btn:disabled {
+    background: #ccc !important;
+    color: #666 !important;
+    cursor: not-allowed !important;
+    opacity: 0.5;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+.variable-btn.disabled:hover,
+.variable-btn:disabled:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Etiqueta descriptiva para variables */
+.variable-buttons-label {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.variable-buttons-label h4 {
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.variable-buttons-label p {
+    color: #666;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Contenedor de grupos de variables */
+.variable-groups-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Grupo individual de variables (A + Ā, B + B̄, etc.) */
+.variable-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.variable-group:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Etiqueta para cada grupo de variables */
+.variable-group::before {
+    content: attr(data-variable);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.operator-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Botón limpiar más grande y de otro color */
+.btn-limpiar {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    width: 100%;
+    min-width: 140px;
+}
+
+.btn-limpiar:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+    background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+}
+
+/* Contenedor para el botón aleatorio */
+.random-button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Botón aleatorio con estilo diferente */
+.btn-limpiar {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 10px rgba(231, 76, 60, 0.3);
+    flex: 1;
+    min-width: 100px;
+}
+
+.btn-aleatorio {
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 10px rgba(155, 89, 182, 0.3);
+    flex: 1;
+    min-width: 100px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+    flex: 1;
+    min-width: 100px;
+}
+
+.btn-aleatorio:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(155, 89, 182, 0.4);
+    background: linear-gradient(135deg, #8e44ad 0%, #7d3c98 100%);
+}
+
+/* Botones de acción */
+.step-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Botones del paso 3 reorganizados */
+.step-actions-paso3 {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.step-actions-left {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.step-actions-right {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+}
+
+
+/* Zona de errores */
+.error-zone {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    display: none;
+}
+
+.error-zone.show {
+    display: block;
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Contenedor del mapa de Karnaugh */
+.mapa-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 2px dashed #dee2e6;
+    padding: 20px;
+}
+
+.mapa-container:not(:empty) {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Estilos para la grilla del mapa K */
+.karnaugh-grid {
+    display: grid;
+    gap: 2px;
+    background: #2c3e50;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Celdas del mapa */
+.celda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    min-height: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.celda:hover {
+    transform: scale(1.05);
+    z-index: 10;
+    position: relative;
+}
+
+/* Estilos para cabeceras */
+.header {
+    background: #34495e !important;
+    color: white !important;
+    font-weight: 600;
+    font-size: 0.9rem;
+    min-width: 60px;
+    min-height: 40px;
+}
+
+.header:hover {
+    transform: none;
+    cursor: default;
+}
+
+/* Estilos para valores 0 y 1 */
+.cero {
+    background-color: #ffcccc;
+    color: #a60000;
+    border: 2px solid #ff9999;
+}
+
+.uno {
+    background-color: #ccffcc;
+    color: #005a00;
+    border: 2px solid #99ff99;
+}
+
+/* Estilos específicos para diferentes tamaños de mapa */
+/* 2 variables: 2x2 */
+.karnaugh-grid.grid-2x2 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+/* 3 variables: 2x4 */
+.karnaugh-grid.grid-2x4 {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+/* 4 variables: 4x4 */
+.karnaugh-grid.grid-4x4 {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        border-radius: 10px;
+    }
+    
+    header {
+        padding: 20px;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    main {
+        padding: 20px;
+    }
+    
+    .controls {
+        padding: 20px;
+    }
+    
+    .celda {
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 1rem;
+    }
+    
+    .header {
+        min-width: 50px;
+        min-height: 35px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.karnaugh-grid {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Estilos para información adicional */
+.map-info {
+    margin-top: 20px;
+    padding: 15px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    border-left: 4px solid #2196f3;
+}
+
+.map-info h3 {
+    color: #1976d2;
+    margin-bottom: 10px;
+}
+
+.map-info p {
+    color: #424242;
+    line-height: 1.5;
+}
