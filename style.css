@@ -1285,3 +1285,176 @@ main {
     color: #424242;
     line-height: 1.5;
 }
+
+/* Media queries específicos para 11" a 23" (en función de anchos típicos) */
+/* 11"–12" HD/HD+ (ancho 1024–1279px) */
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+	.sidebar { width: 180px; }
+	.sidebar.collapsed { width: 48px; }
+	header { padding: 24px; }
+	header h1 { font-size: 2rem; }
+	main { padding: 24px; }
+	.step-container { padding: 20px; }
+	.variable-selector { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+	.expression-display { padding: 10px; font-size: 1rem; }
+	.expression-text, .expression-binary { font-size: 1rem; gap: 6px 6px; }
+	.slot-item { font-size: 0.85rem; }
+	.slot-termino { font-size: 0.9rem; }
+	.karnaugh-grid { gap: 2px; padding: 8px; }
+	.celda { min-width: 44px; min-height: 44px; font-size: 1.05rem; }
+	.header { min-width: 54px; min-height: 36px; font-size: 0.85rem; }
+	.paso3-left { flex: 0 0 60%; }
+	.paso3-right { flex: 0 0 38%; }
+}
+
+/* 12"–13" (ancho 1280–1365px) */
+@media screen and (min-width: 1280px) and (max-width: 1365px) {
+	.sidebar { width: 190px; }
+	.sidebar.collapsed { width: 50px; }
+	.step-container { padding: 22px; }
+	.expression-display { font-size: 1.05rem; }
+	.expression-text, .expression-binary { font-size: 1.05rem; gap: 7px 7px; }
+	.celda { min-width: 48px; min-height: 48px; font-size: 1.1rem; }
+	.header { min-width: 56px; min-height: 38px; font-size: 0.9rem; }
+}
+
+/* 13"–14" HD/FHD (ancho 1366–1439px) */
+@media screen and (min-width: 1366px) and (max-width: 1439px) {
+	.sidebar { width: 200px; }
+	.expression-text, .expression-binary { font-size: 1.1rem; gap: 6px 8px; }
+	.expression-display { font-size: 1.1rem; }
+	.celda { min-width: 50px; min-height: 50px; font-size: 1.15rem; }
+	.header { min-width: 58px; min-height: 38px; font-size: 0.9rem; }
+}
+
+/* 14"–15.6" FHD (ancho 1440–1599px) */
+@media screen and (min-width: 1440px) and (max-width: 1599px) {
+	.sidebar { width: 205px; }
+	.expression-text, .expression-binary { font-size: 1.15rem; gap: 8px 8px; }
+	.expression-display { font-size: 1.15rem; padding: 14px; }
+	.celda { min-width: 52px; min-height: 52px; font-size: 1.2rem; }
+	.karnaugh-grid { gap: 3px; padding: 10px; }
+}
+
+/* 16"–16.5" FHD/QHD (ancho 1600–1679px) */
+@media screen and (min-width: 1600px) and (max-width: 1679px) {
+	.sidebar { width: 210px; }
+	.expression-text, .expression-binary { font-size: 1.18rem; gap: 8px 10px; }
+	.expression-display { font-size: 1.18rem; }
+	.celda { min-width: 54px; min-height: 54px; font-size: 1.22rem; }
+}
+
+/* 17"–21" FHD (ancho 1680–1919px) */
+@media screen and (min-width: 1680px) and (max-width: 1919px) {
+	.sidebar { width: 215px; }
+	.expression-text, .expression-binary { font-size: 1.2rem; gap: 9px 10px; }
+	.expression-display { font-size: 1.2rem; }
+	.celda { min-width: 56px; min-height: 56px; font-size: 1.25rem; }
+	.header { min-width: 64px; min-height: 40px; font-size: 0.95rem; }
+}
+
+/* 21"–23" FHD/QHD (ancho 1920–2399px) */
+@media screen and (min-width: 1920px) and (max-width: 2399px) {
+	.container { max-width: 1800px; margin: 0 auto; }
+	.sidebar { width: 220px; }
+	.sidebar.collapsed { width: 56px; }
+	header { padding: 36px; }
+	header h1 { font-size: 2.6rem; }
+	.step-container { padding: 28px; }
+	.expression-text, .expression-binary { font-size: 1.25rem; gap: 10px 12px; }
+	.expression-display { font-size: 1.25rem; padding: 16px; }
+	.slot-item { font-size: 1rem; }
+	.slot-termino { font-size: 1.05rem; }
+	.karnaugh-grid { gap: 4px; padding: 12px; }
+	.celda { min-width: 60px; min-height: 60px; font-size: 1.3rem; }
+	.header { min-width: 70px; min-height: 44px; font-size: 1rem; }
+}
+
+/* >= 2560px (QHD/2K escalado, también dentro del rango ~23") */
+@media screen and (min-width: 2400px) {
+	.container { max-width: 2000px; margin: 0 auto; }
+	.sidebar { width: 240px; }
+	.sidebar.collapsed { width: 60px; }
+	header { padding: 40px; }
+	header h1 { font-size: 2.8rem; }
+	.step-container { padding: 32px; }
+	.expression-text, .expression-binary { font-size: 1.35rem; gap: 12px 14px; }
+	.expression-display { font-size: 1.35rem; padding: 18px; }
+	.karnaugh-grid { gap: 5px; padding: 14px; }
+	.celda { min-width: 64px; min-height: 64px; font-size: 1.35rem; }
+	.header { min-width: 76px; min-height: 48px; font-size: 1.05rem; }
+}
+
+/* TABLET (hasta ~11") → ocultar sidebar, optimizar layout para 768–1023px */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Ocultar barra lateral y expandir contenido */
+    .sidebar { display: none !important; }
+    .container { height: 100vh; }
+    .main-content { flex: 1; width: 100%; }
+
+    /* Espaciados algo más compactos */
+    header { padding: 22px; }
+    header h1 { font-size: 1.9rem; }
+    main { padding: 18px; }
+    .step-container { padding: 18px; }
+
+    /* Paso 3: apilar columnas para maximizar área útil */
+    .paso3-columns { flex-direction: column; gap: 14px; }
+    .paso3-left { flex: 1 1 auto; max-height: 46vh; }
+    .paso3-right { flex: 1 1 auto; max-height: 46vh; }
+    .mapa-container { padding: 16px; }
+
+    /* Controles y expresión un poco más compactos */
+    .expression-display { padding: 10px; font-size: 1rem; }
+    .expression-text, .expression-binary { font-size: 1rem; gap: 6px 6px; }
+    .variable-buttons { grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 6px; }
+    .variable-btn { padding: 8px 10px; font-size: 0.85rem; }
+
+    /* Mapa K: celdas ligeramente más pequeñas para evitar scroll excesivo */
+    .karnaugh-grid { gap: 2px; padding: 8px; }
+    .celda { min-width: 44px; min-height: 44px; font-size: 1.05rem; }
+    .header { min-width: 52px; min-height: 34px; font-size: 0.85rem; }
+}
+
+/* MÓVIL (bloquear vista) → ≤ 767px */
+@media screen and (max-width: 767px) {
+    /* Ocultar la app bajo el overlay */
+    .container { display: none !important; }
+    .sidebar { display: none !important; }
+    .main-content { display: none !important; }
+
+    /* Mostrar el bloqueador */
+    .mobile-blocker { display: flex !important; }
+}
+
+/* Estilos base del bloqueador (oculto por defecto) */
+.mobile-blocker {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(44,62,80,0.95) 0%, rgba(52,73,94,0.95) 100%);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 24px;
+}
+
+.mobile-blocker-content {
+    background: white;
+    color: #2c3e50;
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.mobile-blocker-content h2 {
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.mobile-blocker-content p {
+    margin: 6px 0;
+}
