@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solucionador de Mapas de Karnaugh</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=4.0">
 </head>
 <body>
     <div id="mobileBlocker" class="mobile-blocker" aria-hidden="true">
@@ -14,31 +14,40 @@
             <p>Por favor, usa un dispositivo con pantalla mayor o rota tu dispositivo si es posible.</p>
         </div>
     </div>
+
     <div class="container">
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-toggle" id="sidebarToggle">
+        <aside class="sidebar" id="sidebar">
+            <button type="button" class="sidebar-toggle" id="sidebarToggle" title="Contraer/Expandir menú" aria-label="Contraer o expandir barra lateral">
                 <span class="toggle-icon">◀</span>
-            </div>
+            </button>
             <div class="sidebar-content">
-                <div class="sidebar-header">
-                    <h2>Mapas de Karnaugh</h2>
-                </div>
-                <div class="sidebar-step-title" id="sidebarStepTitle">Paso 1: Selecciona la cantidad de variables</div>
-                <div class="progress-steps">
-                    <div class="step-indicator" id="stepIndicator1">
-                        <div class="step-number">1</div>
-                        <div class="step-title">Variables</div>
-                        <div class="step-status">Pendiente</div>
+                <div class="sidebar-top">
+                    <div class="sidebar-header">
+                        <h2>Mapas de Karnaugh</h2>
+                        <p class="sidebar-subtitle" id="sidebarStepTitle">Paso 1: Cantidad de variables</p>
                     </div>
-                    <div class="step-indicator" id="stepIndicator2">
-                        <div class="step-number">2</div>
-                        <div class="step-title">Minterms</div>
-                        <div class="step-status">Pendiente</div>
-                    </div>
-                    <div class="step-indicator" id="stepIndicator3">
-                        <div class="step-number">3</div>
-                        <div class="step-title">Expresión</div>
-                        <div class="step-status">Pendiente</div>
+                    <div class="progress-steps">
+                        <div class="step-indicator" id="stepIndicator1" data-step="1" role="button" tabindex="0">
+                            <div class="step-number">1</div>
+                            <div class="step-info">
+                                <div class="step-title">Variables</div>
+                                <div class="step-status">Activo</div>
+                            </div>
+                        </div>
+                        <div class="step-indicator" id="stepIndicator2" data-step="2" role="button" tabindex="0">
+                            <div class="step-number">2</div>
+                            <div class="step-info">
+                                <div class="step-title">Minterms</div>
+                                <div class="step-status">Pendiente</div>
+                            </div>
+                        </div>
+                        <div class="step-indicator" id="stepIndicator3" data-step="3" role="button" tabindex="0">
+                            <div class="step-number">3</div>
+                            <div class="step-info">
+                                <div class="step-title">Expresión y Mapa</div>
+                                <div class="step-status">Pendiente</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="sidebar-actions">
@@ -47,97 +56,124 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </aside>
         
         <div class="main-content">
-            <main>
-            <!-- Paso 1: Selección de variables -->
-            <div class="step-container" id="paso1">
-                <div class="controls">
-                    <div class="variable-selector">
-                        <div class="variable-option" data-vars="2">
-                            <div class="var-label">2 Variables</div>
-                            <div class="var-details">A, B</div>
-                        </div>
-                        <div class="variable-option" data-vars="3">
-                            <div class="var-label">3 Variables</div>
-                            <div class="var-details">A, B, C</div>
-                        </div>
-                        <div class="variable-option" data-vars="4">
-                            <div class="var-label">4 Variables</div>
-                            <div class="var-details">A, B, C, D</div>
-                        </div>
-                        <div class="variable-option" data-vars="5">
-                            <div class="var-label">5 Variables</div>
-                            <div class="var-details">A, B, C, D, E</div>
-                        </div>
-                    </div>
-                    <button id="btnContinuarPaso1" class="btn-primary" disabled>Continuar</button>
-                </div>
-            </div>
+            <div id="zonaErrores" class="error-zone" role="alert" aria-live="polite"></div>
 
-            <!-- Paso 2: Selección de minterms -->
-            <div class="step-container hidden" id="paso2">
-                <div class="controls">
-                    <div class="minterm-selector">
-                        <div class="minterm-controls">
-                            <button id="btnSeleccionarTodos" class="btn-secondary">Seleccionar Todos</button>
-                            <button id="btnDeseleccionarTodos" class="btn-secondary">Deseleccionar Todos</button>
-                        </div>
-                        <div class="minterm-counter">
-                            <label>Minterms seleccionados:</label>
-                            <div class="counter-controls">
-                                <button id="btnDecrementar" class="btn-counter">-</button>
-                                <span id="contadorMinterms" class="counter-display">0</span>
-                                <button id="btnIncrementar" class="btn-counter">+</button>
+            <main>
+                <!-- Paso 1: Selección de variables -->
+                <section class="step-container" id="paso1">
+                    <div class="step-intro">
+                        <h3>Paso 1 · Seleccioná la cantidad de variables</h3>
+                        <p>Definí cuántas variables tendrá la función booleana a representar.</p>
+                    </div>
+                    <div class="controls">
+                        <div class="variable-selector">
+                            <div class="variable-option" data-vars="2" role="button" tabindex="0">
+                                <div class="var-badge">2² = 4 celdas</div>
+                                <div class="var-label">2 Variables</div>
+                                <div class="var-details">A, B</div>
+                            </div>
+                            <div class="variable-option" data-vars="3" role="button" tabindex="0">
+                                <div class="var-badge">2³ = 8 celdas</div>
+                                <div class="var-label">3 Variables</div>
+                                <div class="var-details">A, B, C</div>
+                            </div>
+                            <div class="variable-option" data-vars="4" role="button" tabindex="0">
+                                <div class="var-badge">2⁴ = 16 celdas</div>
+                                <div class="var-label">4 Variables</div>
+                                <div class="var-details">A, B, C, D</div>
+                            </div>
+                            <div class="variable-option" data-vars="5" role="button" tabindex="0">
+                                <div class="var-badge">2⁵ = 32 celdas</div>
+                                <div class="var-label">5 Variables</div>
+                                <div class="var-details">A, B, C, D, E</div>
                             </div>
                         </div>
-                        <div class="minterm-grid" id="mintermGrid"></div>
-                    </div>
-                    <div class="step-actions">
-                        <button id="btnContinuarPaso2" class="btn-primary">Continuar</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Paso 3: Botones de variables y generación -->
-            <div class="step-container hidden" id="paso3">
-                <div class="paso3-content">
-                    <!-- Fila superior a ancho completo: Slots + Expresión -->
-                    <div class="paso3-top">
-                        <div class="slots-display" id="slotsDisplay">
-                            <div class="slots-container" id="slotsContainer"></div>
+                        <div class="step-actions">
+                            <button id="btnContinuarPaso1" class="btn-primary" disabled>Continuar →</button>
                         </div>
-                        <div class="expression-display" id="expressionDisplay">Expresión: </div>
                     </div>
+                </section>
 
-                    <!-- Fila inferior en dos columnas -->
-                    <div class="paso3-columns">
-                        <!-- Columna izquierda: Variables y Botones -->
-                        <div class="paso3-left">
-                            <div class="paso3-bottom">
-                                <div class="variable-buttons" id="variableButtons"></div>
-                                <div class="step-actions-paso3">
-                                    <button id="btnLimpiarExpresion" class="btn-limpiar">Limpiar</button>
-                                    <button id="btnAleatorio" class="btn-aleatorio">🎲 Aleatorio</button>
-                                    <button id="btnGenerarMapa" class="btn-primary">Generar Mapa</button>
+                <!-- Paso 2: Selección de minterms -->
+                <section class="step-container hidden" id="paso2">
+                    <div class="step-intro">
+                        <h3>Paso 2 · Cantidad de términos (minterms)</h3>
+                        <p>Hacé clic hasta el término deseado o ajustá con los controles para definir cuántos términos tendrá la expresión.</p>
+                    </div>
+                    <div class="controls">
+                        <div class="minterm-selector">
+                            <div class="minterm-top-bar">
+                                <div class="minterm-controls">
+                                    <button id="btnSeleccionarTodos" class="btn-secondary">Seleccionar Todos</button>
+                                    <button id="btnDeseleccionarTodos" class="btn-secondary">Deseleccionar Todos</button>
+                                    <button id="btnAleatorioPaso2" class="btn-aleatorio-sm">🎲 Cantidad Aleatoria</button>
+                                </div>
+                                <div class="minterm-counter">
+                                    <label>Términos seleccionados:</label>
+                                    <div class="counter-controls">
+                                        <button id="btnDecrementar" class="btn-counter" title="Quitar un término">−</button>
+                                        <span id="contadorMinterms" class="counter-display">0</span>
+                                        <button id="btnIncrementar" class="btn-counter" title="Agregar un término">+</button>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="minterm-grid" id="mintermGrid"></div>
                         </div>
-
-                        <!-- Columna derecha: Solo el mapa K -->
-                        <div class="paso3-right">
-                            <div id="contenedorMapaK" class="mapa-container"></div>
+                        <div class="step-actions">
+                            <button id="btnContinuarPaso2" class="btn-primary">Continuar →</button>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <div id="zonaErrores" class="error-zone"></div>
+                </section>
+
+                <!-- Paso 3: Constructor de expresiones y Flujo Apilado (Mapa → Agrupar → Simplificar) -->
+                <section class="step-container hidden" id="paso3">
+                    <div class="paso3-content" id="paso3Content">
+                        <!-- Fila superior a ancho completo: Slots (solo en edición) + Expresión/Binario (siempre visible) -->
+                        <div class="paso3-top">
+                            <div class="slots-display" id="slotsDisplay">
+                                <div class="slots-container" id="slotsContainer"></div>
+                            </div>
+                            <div class="expression-display" id="expressionDisplay"></div>
+                        </div>
+
+                        <!-- Fila de Constructor + Mapa (en modo edición son 2 columnas; al generar mapa queda solo el mapa) -->
+                        <div class="paso3-columns" id="paso3Columns">
+                            <!-- Columna izquierda: Variables y Botones (se oculta al generar mapa) -->
+                            <div class="paso3-left" id="paso3Left">
+                                <div class="paso3-bottom">
+                                    <div class="variable-buttons" id="variableButtons"></div>
+                                    <div class="step-actions-paso3">
+                                        <button id="btnBorrarUltimo" class="btn-borrar" title="Borrar última variable (Backspace)" disabled>⌫ Borrar</button>
+                                        <button id="btnLimpiarExpresion" class="btn-limpiar" title="Vaciar toda la expresión">Limpiar</button>
+                                        <button id="btnAleatorio" class="btn-aleatorio" title="Generar expresión aleatoria sin repetir términos">🎲 Aleatorio</button>
+                                        <button id="btnGenerarMapa" class="btn-primary" title="Renderizar el Mapa de Karnaugh (Enter)">Generar Mapa</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Columna derecha (o fila completa al generar): Mapa K y botón Agrupar -->
+                            <div class="paso3-right" id="paso3Right">
+                                <div id="contenedorMapaK" class="mapa-container"></div>
+                            </div>
+                        </div>
+
+                        <!-- Contenedor scrolleable inferior para las instancias apiladas (Agrupar ↓ Simplificar) -->
+                        <div id="zonaEtapasScroll" class="etapas-scroll-container hidden">
+                            <!-- Instancia 2 (surge hacia abajo al pulsar "Agrupar"): Grupos formados -->
+                            <div id="etapaAgrupacion" class="stacked-stage hidden"></div>
+
+                            <!-- Instancia 3 (surge hacia abajo al pulsar "Simplificar"): Simplificación paso a paso -->
+                            <div id="etapaSimplificacion" class="stacked-stage hidden"></div>
+                        </div>
+                    </div>
+                </section>
             </main>
         </div>
     </div>
     
-    <script src="app.js"></script>
+    <script src="app.js?v=4.0"></script>
 </body>
 </html>
